@@ -94,6 +94,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-top: 40px;
     }
     footer a { color: var(--accent); text-decoration: none; }
+    /* HubSpot form overrides — readable on dark background */
+.hs-form-frame label,
+.hs-form-frame .hs-form-field > label,
+.hs-form-frame legend,
+.hs-form-frame .hs-richtext,
+.hs-form-frame .hs-richtext p {
+  color: var(--text) !important;
+}
+
+.hs-form-frame .hs-form-field {
+  margin-bottom: 16px;
+}
+
+.hs-form-frame input[type="text"],
+.hs-form-frame input[type="email"],
+.hs-form-frame input[type="tel"],
+.hs-form-frame textarea,
+.hs-form-frame select {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  padding: 10px 12px !important;
+}
+
+.hs-form-frame input[type="text"]:focus,
+.hs-form-frame input[type="email"]:focus,
+.hs-form-frame input[type="tel"]:focus,
+.hs-form-frame textarea:focus,
+.hs-form-frame select:focus {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 1px;
+  border-color: var(--accent) !important;
+}
+
+.hs-form-frame .hs-error-msg,
+.hs-form-frame .hs-error-msgs {
+  color: #ff7575 !important;
+  font-size: 13px;
+}
+
+.hs-form-frame .hs-richtext {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
   </style>
 </head>
 <body>

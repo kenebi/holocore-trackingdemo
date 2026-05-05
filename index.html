@@ -5,22 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HoloCore — Tracking Sandbox</title>
 
- <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-524ZR2X5');</script>
-<!-- End Google Tag Manager -->
+  <!-- Google Tag Manager -->
+  <!-- TODO: paste your GTM <head> snippet here from tagmanager.google.com -->
+  <!-- End Google Tag Manager -->
 
   <style>
     :root {
       --bg: #0a0e1a;
       --surface: #131829;
       --accent: #00d9ff;
+      --accent-dark: #00aacc;
       --text: #e8edf5;
       --muted: #8892a8;
       --border: rgba(255, 255, 255, 0.08);
+      --error: #ff7575;
+      --success: #4ade80;
     }
     * { box-sizing: border-box; }
     body {
@@ -75,6 +74,107 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin: 0 0 24px;
       font-size: 15px;
     }
+
+    /* Form styles */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-field {
+      margin-bottom: 16px;
+    }
+    .form-field label {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-field label .required {
+      color: var(--error);
+      margin-left: 2px;
+    }
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .form-field .error-text {
+      display: none;
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .form-field.has-error input,
+    .form-field.has-error textarea {
+      border-color: var(--error);
+    }
+    .form-field.has-error .error-text {
+      display: block;
+    }
+    .submit-btn {
+      background: var(--accent);
+      color: #0a0e1a;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: var(--accent-dark); }
+    .submit-btn:disabled {
+      background: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .success-state.active {
+      display: block;
+    }
+    .success-state .check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(74, 222, 128, 0.1);
+      border: 2px solid var(--success);
+      color: var(--success);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    .success-state h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+    .success-state p {
+      color: var(--muted);
+      margin: 0;
+    }
+    form.hidden { display: none; }
+
     .architecture {
       font-family: ui-monospace, "SF Mono", monospace;
       font-size: 13px;
@@ -94,74 +194,63 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       margin-top: 40px;
     }
     footer a { color: var(--accent); text-decoration: none; }
-    /* HubSpot form overrides — readable on dark background */
-.hs-form-frame label,
-.hs-form-frame .hs-form-field > label,
-.hs-form-frame legend,
-.hs-form-frame .hs-richtext,
-.hs-form-frame .hs-richtext p {
-  color: var(--text) !important;
-}
-
-.hs-form-frame .hs-form-field {
-  margin-bottom: 16px;
-}
-
-.hs-form-frame input[type="text"],
-.hs-form-frame input[type="email"],
-.hs-form-frame input[type="tel"],
-.hs-form-frame textarea,
-.hs-form-frame select {
-  background: #ffffff !important;
-  color: #1a1a1a !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 6px !important;
-  padding: 10px 12px !important;
-}
-
-.hs-form-frame input[type="text"]:focus,
-.hs-form-frame input[type="email"]:focus,
-.hs-form-frame input[type="tel"]:focus,
-.hs-form-frame textarea:focus,
-.hs-form-frame select:focus {
-  outline: 2px solid var(--accent) !important;
-  outline-offset: 1px;
-  border-color: var(--accent) !important;
-}
-
-.hs-form-frame .hs-error-msg,
-.hs-form-frame .hs-error-msgs {
-  color: #ff7575 !important;
-  font-size: 13px;
-}
-
-.hs-form-frame .hs-richtext {
-  font-size: 14px;
-  margin-bottom: 16px;
-}
   </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-524ZR2X5"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <!-- TODO: paste your GTM <body> noscript snippet here -->
+  <!-- End Google Tag Manager (noscript) -->
 
   <div class="container">
     <span class="badge">Tracking Architecture Sandbox</span>
     <h1>HoloCore — Conversion Event Demo</h1>
     <p class="lede">
-      Companion to the HoloCore site on Wix Studio. This page demonstrates the
-      tracking layer end-to-end: GTM container, GA4 conversion event, HubSpot CRM.
+      Companion to the HoloCore site on Wix Studio. This page demonstrates the tracking
+      layer end-to-end: GTM container, GA4 conversion event, HubSpot CRM via Forms API.
     </p>
 
     <div class="card">
       <h2>Book a demo</h2>
-      <p>Submitting the form below fires <code>form_submit</code> in GA4 (marked as a conversion) and creates a contact in HubSpot.</p>
+      <p>Submitting the form below fires <code>form_submit</code> in GA4 (marked as a conversion) and creates a contact in HubSpot via the Forms API.</p>
 
- <!-- HubSpot Form (v3 embed) -->
-<script src="https://js-na2.hsforms.net/forms/embed/245936656.js" defer></script>
-<div class="hs-form-frame" data-region="na2" data-form-id="9ff417b5-00cc-4dd0-ae82-7168b4fec286" data-portal-id="245936656"></div>
+      <form id="bookDemoForm" novalidate>
+        <div class="form-row">
+          <div class="form-field" data-field="firstName">
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+            <div class="error-text">Required</div>
+          </div>
+          <div class="form-field" data-field="lastName">
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+            <div class="error-text">Required</div>
+          </div>
+        </div>
+
+        <div class="form-field" data-field="email">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" name="email" autocomplete="email" required>
+          <div class="error-text">Valid email required</div>
+        </div>
+
+        <div class="form-field" data-field="company">
+          <label>School / Organization</label>
+          <input type="text" name="company" autocomplete="organization">
+        </div>
+
+        <div class="form-field" data-field="message">
+          <label>What are you hoping to use VR for?</label>
+          <textarea name="message" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+      </form>
+
+      <div class="success-state" id="successState">
+        <div class="check">✓</div>
+        <h3>Form submitted</h3>
+        <p>Thank you — we'll be in touch soon.</p>
+      </div>
     </div>
 
     <div class="card">
@@ -169,22 +258,119 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>What's happening when you submit the form above:</p>
       <pre class="architecture">User submits form
   ↓
-HubSpot iframe → postMessage to parent window
+JS handler validates fields
   ↓
-GTM Custom HTML listener catches message
+POST → HubSpot Forms API
+  → contact created in HubSpot Cabanas portal
   ↓
 dataLayer.push({ event: 'form_submit', ... })
   ↓
-GA4 Event tag fires (Custom Event trigger)
+GTM Custom Event trigger fires
   ↓
-form_submit recorded in GA4, marked as conversion
+GA4 Event tag fires → form_submit recorded
   ↓
-(Parallel) HubSpot creates contact in Demo portal</pre>
+Marked as a conversion in GA4</pre>
     </div>
 
     <footer>
       Built by Kenneth Ebilane · <a href="https://github.com/kenebi/holocore-trackingdemo">View source</a>
     </footer>
   </div>
+
+  <script>
+  (function() {
+    var PORTAL_ID = '245936656';
+    var FORM_ID = '9ff417b5-00cc-4dd0-ae82-7168b4fec286';
+    var ENDPOINT = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_ID;
+
+    var form = document.getElementById('bookDemoForm');
+    var submitBtn = document.getElementById('submitBtn');
+    var successState = document.getElementById('successState');
+
+    function setError(fieldName, hasError) {
+      var field = form.querySelector('[data-field="' + fieldName + '"]');
+      if (field) {
+        if (hasError) field.classList.add('has-error');
+        else field.classList.remove('has-error');
+      }
+    }
+
+    function validate(data) {
+      var ok = true;
+      if (!data.firstName) { setError('firstName', true); ok = false; } else setError('firstName', false);
+      if (!data.lastName) { setError('lastName', true); ok = false; } else setError('lastName', false);
+      if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        setError('email', true); ok = false;
+      } else setError('email', false);
+      return ok;
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var data = {
+        firstName: form.firstName.value.trim(),
+        lastName: form.lastName.value.trim(),
+        email: form.email.value.trim(),
+        company: form.company.value.trim(),
+        message: form.message.value.trim()
+      };
+
+      if (!validate(data)) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      // Build HubSpot Forms API payload
+      var fields = [
+        { name: 'firstname', value: data.firstName },
+        { name: 'lastname', value: data.lastName },
+        { name: 'email', value: data.email }
+      ];
+      if (data.company) fields.push({ name: 'company', value: data.company });
+      if (data.message) fields.push({ name: 'message', value: data.message });
+
+      var payload = {
+        fields: fields,
+        context: {
+          pageUri: window.location.href,
+          pageName: document.title
+        }
+      };
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('HubSpot returned ' + res.status);
+        return res.json();
+      })
+      .then(function(result) {
+        console.log('[HubSpot] Contact created:', result);
+
+        // Push form_submit event to dataLayer for GTM/GA4
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'form_submit',
+          form_id: FORM_ID,
+          form_source: 'github_pages_sandbox'
+        });
+        console.log('[GTM] form_submit pushed to dataLayer');
+
+        // Swap to success state
+        form.classList.add('hidden');
+        successState.classList.add('active');
+      })
+      .catch(function(err) {
+        console.error('[HubSpot] Submission failed:', err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+        alert('Something went wrong. Please try again.');
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
